@@ -1,53 +1,30 @@
+import styles from "./tickets.module.css";
+
 export default function TicketsPage() {
   const tickets = [
-    {
-      id: 1,
-      titulo: "Error en el sistema",
-      estado: "Abierto",
-    },
-    {
-      id: 2,
-      titulo: "Problema con el acceso",
-      estado: "Cerrado",
-    },
+    { id: 1, titulo: "Error en el sistema", estado: "Abierto" },
+    { id: 2, titulo: "Problema con el acceso", estado: "Cerrado" },
   ];
 
   return (
-    <main style={{ maxWidth: "800px", margin: "80px auto" }}>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-        }}
-      >
+    <main className={styles.contenedor}>
+      <header className={styles.encabezado}>
         <h1>Tickets</h1>
-        <a href="/tickets/nuevo">Nuevo ticket</a>
+        <a href="/tickets/nuevo" className={styles.botonNuevo}>
+          Nuevo ticket
+        </a>
       </header>
 
-      <ul style={{ listStyle: "none", padding: 0 }}>
+      <ul className={styles.lista}>
         {tickets.map((ticket) => (
-          <li
-            key={ticket.id}
-            style={{
-              border: "1px solid #ccc",
-              padding: "16px",
-              marginBottom: "12px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <li key={ticket.id} className={styles.ticket}>
             <div>
               <h3>{ticket.titulo}</h3>
               <p>Estado: {ticket.estado}</p>
             </div>
 
-            <div>
-              <a href={`/tickets/${ticket.id}`} style={{ marginRight: "8px" }}>
-                Editar
-              </a>
+            <div className={styles.acciones}>
+              <a href={`/tickets/${ticket.id}`}>Editar</a>
               <button>Eliminar</button>
             </div>
           </li>
