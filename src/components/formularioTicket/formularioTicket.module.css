@@ -1,0 +1,25 @@
+.contenedor {
+  max-width: 600px;
+  margin: 80px auto;
+}
+
+.grupoCampo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.grupoCampo label {
+  margin-bottom: 4px;
+}
+
+.grupoCampo input,
+.grupoCampo textarea,
+.grupoCampo select {
+  padding: 8px;
+}
+
+.boton {
+  padding: 10px;
+  cursor: pointer;
+}
