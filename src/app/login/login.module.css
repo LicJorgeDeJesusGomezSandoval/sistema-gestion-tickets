@@ -21,3 +21,9 @@
   padding: 10px;
   cursor: pointer;
 }
+
+@media (max-width: 600px) {
+  .contenedor {
+    margin: 40px 16px;
+  }
+}
