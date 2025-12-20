@@ -1,0 +1,22 @@
+.contenedor {
+  padding: 16px;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ticket {
+  border: 1px solid #ccc;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.estado {
+  font-size: 12px;
+  font-weight: bold;
+}
