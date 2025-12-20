@@ -16,7 +16,7 @@ export default function FormularioTicket({
   const [descripcion, setDescripcion] = useState("");
   const [estado, setEstado] = useState("Abierto");
 
-  function manejarEnvioFormulario(evento: React.FormEvent) {
+  async function manejarEnvioFormulario(evento: React.FormEvent) {
     evento.preventDefault();
 
     const ticket = {
@@ -25,8 +25,19 @@ export default function FormularioTicket({
       estado,
     };
 
-    console.log("Ticket enviado:", ticket);
-    alert("Ticket enviado (revisa la consola)");
+    await fetch("/api/tickets", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(ticket),
+    });
+
+    alert("Ticket creado correctamente");
+
+    setTitulo("");
+    setDescripcion("");
+    setEstado("Abierto");
   }
 
   return (
