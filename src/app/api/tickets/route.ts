@@ -1,19 +1,5 @@
 import { NextResponse } from "next/server";
-
-let tickets = [
-  {
-    id: 1,
-    titulo: "Error al iniciar sesión",
-    descripcion: "El usuario no puede entrar al sistema",
-    estado: "Abierto",
-  },
-  {
-    id: 2,
-    titulo: "Pantalla en blanco",
-    descripcion: "La página principal no carga",
-    estado: "Cerrado",
-  },
-];
+import { tickets } from "./data";
 
 export async function GET() {
   return NextResponse.json(tickets);
