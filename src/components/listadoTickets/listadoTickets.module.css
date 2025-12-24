@@ -1,22 +1,85 @@
 .contenedor {
-  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
 
 .lista {
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  margin: 0;
 }
 
-.ticket {
-  border: 1px solid #ccc;
-  padding: 12px;
-  border-radius: 6px;
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 14px 0;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.info {
+  max-width: 70%;
+}
+
+.info strong {
+  display: block;
+  font-size: 16px;
+}
+
+.info p {
+  margin: 4px 0;
+  color: #555;
 }
 
 .estado {
   font-size: 12px;
-  font-weight: bold;
+  color: #6b7280;
+}
+
+.acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.botonEditar {
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.botonEliminar {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .item {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info {
+    max-width: 100%;
+  }
+
+  .acciones {
+    width: 100%;
+  }
 }
