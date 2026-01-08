@@ -1,61 +1,111 @@
 import { NextResponse } from "next/server";
-import { tickets, Ticket } from "../../tickets/data";
+import { prisma } from "@/lib/prisma";
 
-export async function DELETE(
-  request: Request,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
-  const idTicket = Number(id);
+type Params = {
+  params: Promise<{ id: string }>;
+};
 
-  const indice = tickets.findIndex(
-    (ticket: Ticket) => ticket.id === idTicket
-  );
+// =======================
+// UPDATE (PUT)
+// =======================
+export async function PUT(request: Request, { params }: Params) {
+  try {
+    // 1️⃣ Resolver la Promise de params
+    const { id } = await params;
+    const idNumber = Number(id);
 
-  if (indice === -1) {
+    // 2️⃣ Validar ID
+    if (isNaN(idNumber)) {
+      return NextResponse.json(
+        { mensaje: "ID inválido" },
+        { status: 400 }
+      );
+    }
+
+    // 3️⃣ Leer body
+    const body = await request.json();
+    const { titulo, descripcion, estado } = body;
+
+    // 4️⃣ Validar body
+    if (!titulo || !descripcion || !estado) {
+      return NextResponse.json(
+        { mensaje: "Todos los campos son obligatorios" },
+        { status: 400 }
+      );
+    }
+
+    // 5️⃣ Verificar existencia
+    const existeTicket = await prisma.ticket.findUnique({
+      where: { id: idNumber },
+    });
+
+    if (!existeTicket) {
+      return NextResponse.json(
+        { mensaje: "Ticket no encontrado" },
+        { status: 404 }
+      );
+    }
+
+    // 6️⃣ Actualizar
+    const ticketActualizado = await prisma.ticket.update({
+      where: { id: idNumber },
+      data: { titulo, descripcion, estado },
+    });
+
+    return NextResponse.json(ticketActualizado);
+  } catch (error) {
     return NextResponse.json(
-      { mensaje: "Ticket no encontrado" },
-      { status: 404 }
+      { mensaje: "Error interno del servidor" },
+      { status: 500 }
     );
   }
-
-  tickets.splice(indice, 1);
-
-  return NextResponse.json(
-    { mensaje: "Ticket eliminado correctamente" },
-    { status: 200 }
-  );
 }
 
-export async function PUT(
-  request: Request,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
-  const idTicket = Number(id);
 
-  const body = await request.json();
 
-  const indice = tickets.findIndex(
-    (ticket: Ticket) => ticket.id === idTicket
-  );
+// =======================
+// DELETE
+// =======================
+export async function DELETE(request: Request, { params }: Params) {
+  try {
+    // 1️⃣ Resolver params
+    const { id } = await params;
+    const idNumber = Number(id);
 
-  if (indice === -1) {
+    // 2️⃣ Validar ID
+    if (isNaN(idNumber)) {
+      return NextResponse.json(
+        { mensaje: "ID inválido" },
+        { status: 400 }
+      );
+    }
+
+    // 3️⃣ Verificar existencia
+    const ticket = await prisma.ticket.findUnique({
+      where: { id: idNumber },
+    });
+
+    if (!ticket) {
+      return NextResponse.json(
+        { mensaje: "Ticket no encontrado" },
+        { status: 404 }
+      );
+    }
+
+    // 4️⃣ Eliminar
+    await prisma.ticket.delete({
+      where: { id: idNumber },
+    });
+
+    // 5️⃣ Respuesta correcta
     return NextResponse.json(
-      { mensaje: "Ticket no encontrado" },
-      { status: 404 }
+      { mensaje: "Ticket eliminado correctamente" },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { mensaje: "Error interno del servidor" },
+      { status: 500 }
     );
   }
-
-  tickets[indice] = {
-    ...tickets[indice],
-    titulo: body.titulo,
-    descripcion: body.descripcion,
-    estado: body.estado,
-  };
-
-  return NextResponse.json(
-    { mensaje: "Ticket actualizado correctamente", ticket: tickets[indice] },
-    { status: 200 }
-  );
 }

@@ -1,21 +1,16 @@
-export type Ticket = {
-  id: number;
-  titulo: string;
-  descripcion: string;
-  estado: string;
-};
+import { Ticket } from "@/types/ticket";
 
 export let tickets: Ticket[] = [
   {
     id: 1,
-    titulo: "Error al iniciar sesión",
-    descripcion: "El usuario no puede entrar al sistema",
+    titulo: "Error en login",
+    descripcion: "No permite iniciar sesión",
     estado: "Abierto",
   },
   {
     id: 2,
     titulo: "Pantalla en blanco",
-    descripcion: "La página principal no carga",
-    estado: "Cerrado",
+    descripcion: "No carga el dashboard",
+    estado: "En progreso",
   },
 ];
